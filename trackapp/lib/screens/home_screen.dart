@@ -93,7 +93,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: Padding(
                   padding: EdgeInsets.symmetric(horizontal: 24),
                   child: Text(
-                    "Halo, $_username! 👋",
+                    "Halo, $_username!",
                     style: TextStyle(
                       fontSize: 22,
                       fontWeight: FontWeight.w600,
@@ -112,17 +112,7 @@ class _HomeScreenState extends State<HomeScreen> {
               const SizedBox(height: 12),
               const Align(
                 alignment: Alignment.centerLeft,
-                child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 24),
-                  child: Text(
-                    "Pilih fitur yang ingin kamu gunakan 👇",
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.w400,
-                      color: Colors.white,
-                    ),
-                  ),
-                ),
+                child: Padding(padding: EdgeInsets.symmetric(horizontal: 24)),
               ),
               const SizedBox(height: 16),
               Expanded(

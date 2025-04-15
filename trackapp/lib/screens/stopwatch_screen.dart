@@ -10,6 +10,7 @@ class StopwatchScreen extends StatefulWidget {
 class _StopwatchScreenState extends State<StopwatchScreen> {
   Stopwatch _stopwatch = Stopwatch();
   Timer? _timer;
+  List<String> _lapTimes = []; // List to store the lap times
 
   void _startStopwatch() {
     if (!_stopwatch.isRunning) {
@@ -24,13 +25,18 @@ class _StopwatchScreenState extends State<StopwatchScreen> {
     if (_stopwatch.isRunning) {
       _stopwatch.stop();
       _timer?.cancel();
+      // Store the lap time in the list when the stopwatch is stopped
+      setState(() {
+        _lapTimes.add(_formatTime(_stopwatch.elapsedMilliseconds));
+      });
     }
   }
 
   void _resetStopwatch() {
-    _stopStopwatch();
     _stopwatch.reset();
-    setState(() {});
+    setState(() {
+      _lapTimes.clear(); // Clear the lap times when reset
+    });
   }
 
   double _calculateAngle() {
@@ -43,8 +49,8 @@ class _StopwatchScreenState extends State<StopwatchScreen> {
     int minutes = (milliseconds ~/ 60000);
     int seconds = ((milliseconds ~/ 1000) % 60);
     int milliSeconds = ((milliseconds % 1000) ~/ 10);
-    return '${minutes.toString().padLeft(2, '0')}:'
-        '${seconds.toString().padLeft(2, '0')}:'
+    return '${minutes.toString().padLeft(2, '0')}:' +
+        '${seconds.toString().padLeft(2, '0')}:' +
         '${milliSeconds.toString().padLeft(2, '0')}';
   }
 
@@ -165,6 +171,35 @@ class _StopwatchScreenState extends State<StopwatchScreen> {
                     ),
                   ),
                 ],
+              ),
+              const SizedBox(height: 40),
+              // Display the lap times list below the stopwatch
+              Expanded(
+                child: ListView.builder(
+                  padding: const EdgeInsets.all(16),
+                  itemCount: _lapTimes.length,
+                  itemBuilder: (context, index) {
+                    return Card(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      elevation: 6,
+                      margin: const EdgeInsets.symmetric(vertical: 8),
+                      color: Colors.white.withOpacity(0.9),
+                      child: ListTile(
+                        contentPadding: const EdgeInsets.symmetric(
+                          horizontal: 16,
+                          vertical: 12,
+                        ),
+                        title: Text(
+                          'Lap ${index + 1}: ${_lapTimes[index]}',
+                          style: const TextStyle(fontSize: 18),
+                        ),
+                        leading: Icon(Icons.timer, color: Colors.blue.shade700),
+                      ),
+                    );
+                  },
+                ),
               ),
             ],
           ),

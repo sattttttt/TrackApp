@@ -34,68 +34,71 @@ class HelpScreen extends StatelessWidget {
             color: Colors.white.withOpacity(0.95),
             child: Padding(
               padding: const EdgeInsets.all(20),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: const [
-                  Text(
-                    "Panduan Penggunaan Aplikasi",
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black87,
+              child: SingleChildScrollView(
+                // Make this part scrollable
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: const [
+                    Text(
+                      "Panduan Penggunaan Aplikasi",
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black87,
+                      ),
                     ),
-                  ),
-                  SizedBox(height: 16),
-                  Text("1. Login dengan akun Anda."),
-                  SizedBox(height: 6),
-                  Text(
-                    "   - Masukkan username dan password pada halaman login.",
-                  ),
-                  Text(
-                    "   - Jika berhasil, Anda akan diarahkan ke halaman utama.",
-                  ),
-                  SizedBox(height: 10),
-                  Text("2. Pilih menu yang tersedia di halaman utama."),
-                  SizedBox(height: 6),
-                  Text(
-                    "   - Stopwatch: Menghitung waktu mundur atau berjalan.",
-                  ),
-                  Text(
-                    "   - Jenis Bilangan: Menentukan tipe bilangan (positif, genap, dll).",
-                  ),
-                  Text(
-                    "   - Tracking LBS: Menampilkan lokasi Anda secara real-time.",
-                  ),
-                  Text(
-                    "   - Konversi Waktu: Mengubah tahun ke jam, menit, dan detik.",
-                  ),
-                  Text(
-                    "   - Rekomendasi Situs: Daftar situs bermanfaat yang bisa disimpan.",
-                  ),
-                  SizedBox(height: 10),
-                  Text("3. Navigasi aplikasi:"),
-                  SizedBox(height: 6),
-                  Text(
-                    "   - Gunakan menu navigasi bawah untuk pindah antar halaman.",
-                  ),
-                  Text(
-                    "   - Halaman Anggota menampilkan daftar tim pengembang.",
-                  ),
-                  SizedBox(height: 10),
-                  Text("4. Keluar dari aplikasi:"),
-                  SizedBox(height: 6),
-                  Text(
-                    "   - Klik ikon Logout di bagian bawah untuk keluar dari sesi.",
-                  ),
-                  SizedBox(height: 20),
-                  Text(
-                    "Catatan: Pastikan koneksi internet aktif untuk fitur lokasi.",
-                    style: TextStyle(
-                      fontStyle: FontStyle.italic,
-                      color: Colors.black54,
+                    SizedBox(height: 16),
+                    Text("1. Login dengan akun Anda."),
+                    SizedBox(height: 6),
+                    Text(
+                      "   - Masukkan username dan password pada halaman login.",
                     ),
-                  ),
-                ],
+                    Text(
+                      "   - Jika berhasil, Anda akan diarahkan ke halaman utama.",
+                    ),
+                    SizedBox(height: 10),
+                    Text("2. Pilih menu yang tersedia di halaman utama."),
+                    SizedBox(height: 6),
+                    Text(
+                      "   - Stopwatch: Menghitung waktu mundur atau berjalan.",
+                    ),
+                    Text(
+                      "   - Jenis Bilangan: Menentukan tipe bilangan (positif, genap, dll).",
+                    ),
+                    Text(
+                      "   - Tracking LBS: Menampilkan lokasi Anda secara real-time.",
+                    ),
+                    Text(
+                      "   - Konversi Waktu: Mengubah tahun ke jam, menit, dan detik.",
+                    ),
+                    Text(
+                      "   - Rekomendasi Situs: Daftar situs bermanfaat yang bisa disimpan.",
+                    ),
+                    SizedBox(height: 10),
+                    Text("3. Navigasi aplikasi:"),
+                    SizedBox(height: 6),
+                    Text(
+                      "   - Gunakan menu navigasi bawah untuk pindah antar halaman.",
+                    ),
+                    Text(
+                      "   - Halaman Anggota menampilkan daftar tim pengembang.",
+                    ),
+                    SizedBox(height: 10),
+                    Text("4. Keluar dari aplikasi:"),
+                    SizedBox(height: 6),
+                    Text(
+                      "   - Klik ikon Logout di bagian bawah untuk keluar dari sesi.",
+                    ),
+                    SizedBox(height: 20),
+                    Text(
+                      "Catatan: Pastikan koneksi internet aktif untuk fitur lokasi.",
+                      style: TextStyle(
+                        fontStyle: FontStyle.italic,
+                        color: Colors.black54,
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
           ),

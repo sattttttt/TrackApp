@@ -12,18 +12,39 @@ class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController _passwordController = TextEditingController();
 
   bool _obscurePassword = true;
+  String _errorMessage = "";
 
   void _login() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.setBool("isLoggedIn", true);
-    await prefs.setString(
-      "username",
-      _usernameController.text,
-    ); // simpan nama user
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(builder: (context) => HomeScreen()),
-    );
+    // Predefined credentials
+    const String validUsername = "Arda";
+    const String validPassword = "163";
+
+    // Get the entered username and password
+    String enteredUsername = _usernameController.text;
+    String enteredPassword = _passwordController.text;
+
+    // Check if the entered username and password match the predefined ones
+    if (enteredUsername != validUsername) {
+      // If the username is incorrect, show the username error message
+      setState(() {
+        _errorMessage = "Username is incorrect!";
+      });
+    } else if (enteredPassword != validPassword) {
+      // If the password is incorrect, show the password error message
+      setState(() {
+        _errorMessage = "Password is incorrect!";
+      });
+    } else {
+      // If both are correct, proceed with login
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      await prefs.setBool("isLoggedIn", true);
+      await prefs.setString("username", enteredUsername);
+
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => HomeScreen()),
+      );
+    }
   }
 
   @override
@@ -93,6 +114,14 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                     ),
                     const SizedBox(height: 24),
+                    if (_errorMessage.isNotEmpty)
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 16),
+                        child: Text(
+                          _errorMessage,
+                          style: TextStyle(color: Colors.red, fontSize: 16),
+                        ),
+                      ),
                     SizedBox(
                       width: double.infinity,
                       child: ElevatedButton(

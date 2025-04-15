@@ -10,18 +10,6 @@ class RecommendationScreen extends StatelessWidget {
           "https://upload.wikimedia.org/wikipedia/commons/1/17/Google-flutter-logo.png",
     },
     {
-      "title": "Dart Programming Language",
-      "url": "https://dart.dev",
-      "image":
-          "https://dart.dev/assets/shared/dart/logo+text/horizontal/white-e71fb382b95004058b44c53063f92ddc6b4cc26d5aa180d4c7f80b60778827b3.svg",
-    },
-    {
-      "title": "Stack Overflow - Flutter",
-      "url": "https://stackoverflow.com/questions/tagged/flutter",
-      "image":
-          "https://upload.wikimedia.org/wikipedia/commons/e/ef/Stack_Overflow_icon.svg",
-    },
-    {
       "title": "GitHub - Flutter Repository",
       "url": "https://github.com/flutter/flutter",
       "image":
