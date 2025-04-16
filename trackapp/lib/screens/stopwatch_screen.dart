@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:math';
 import 'package:flutter/material.dart';
 
 class StopwatchScreen extends StatefulWidget {
@@ -39,12 +38,6 @@ class _StopwatchScreenState extends State<StopwatchScreen> {
     });
   }
 
-  double _calculateAngle() {
-    final elapsed = _stopwatch.elapsedMilliseconds;
-    final seconds = (elapsed / 1000) % 60;
-    return (2 * pi * (seconds / 60)) - pi / 2;
-  }
-
   String _formatTime(int milliseconds) {
     int minutes = (milliseconds ~/ 60000);
     int seconds = ((milliseconds ~/ 1000) % 60);
@@ -62,61 +55,38 @@ class _StopwatchScreenState extends State<StopwatchScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final angle = _calculateAngle();
-
     return Scaffold(
       appBar: AppBar(
         title: const Text("Stopwatch"),
-        backgroundColor: const Color(0xFF4A90E2),
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          onPressed: () => Navigator.pop(context),
-        ),
+        foregroundColor: Colors.white,
+        backgroundColor: const Color(0xFF8E44AD),
       ),
       body: Container(
         width: double.infinity,
         decoration: const BoxDecoration(
           gradient: LinearGradient(
-            colors: [Color(0xFF4A90E2), Color(0xFF50E3C2)],
+            colors: [Color(0xFF8E44AD), Color(0xFF2980B9)],
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
           ),
         ),
         child: SafeArea(
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               const SizedBox(height: 16),
-              const Text(
-                "STOPWATCH",
-                style: TextStyle(
-                  fontSize: 32,
-                  fontWeight: FontWeight.w700,
-                  letterSpacing: 2,
-                  color: Colors.white,
-                  shadows: [
-                    Shadow(
-                      color: Colors.black26,
-                      blurRadius: 4,
-                      offset: Offset(2, 2),
-                    ),
-                  ],
-                ),
-              ),
               const SizedBox(height: 30),
-              CustomPaint(
-                painter: StopwatchPainter(angle),
-                size: const Size(250, 250),
-              ),
-              const SizedBox(height: 24),
+              // Digital timer display
               Text(
                 _formatTime(_stopwatch.elapsedMilliseconds),
                 style: const TextStyle(
-                  fontSize: 36,
+                  fontSize: 48,
                   fontWeight: FontWeight.bold,
                   color: Colors.white,
                 ),
               ),
               const SizedBox(height: 40),
+              // Control Buttons
               Wrap(
                 alignment: WrapAlignment.center,
                 spacing: 16,
@@ -125,7 +95,7 @@ class _StopwatchScreenState extends State<StopwatchScreen> {
                   ElevatedButton.icon(
                     onPressed: _startStopwatch,
                     icon: const Icon(Icons.play_arrow),
-                    label: const Text("Mulai"),
+                    label: const Text("Start"),
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.green,
                       foregroundColor: Colors.white,
@@ -141,7 +111,7 @@ class _StopwatchScreenState extends State<StopwatchScreen> {
                   ElevatedButton.icon(
                     onPressed: _stopStopwatch,
                     icon: const Icon(Icons.pause),
-                    label: const Text("Berhenti"),
+                    label: const Text("Stop"),
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.orange,
                       foregroundColor: Colors.white,
@@ -189,7 +159,7 @@ class _StopwatchScreenState extends State<StopwatchScreen> {
                       child: ListTile(
                         contentPadding: const EdgeInsets.symmetric(
                           horizontal: 16,
-                          vertical: 12,
+                          vertical: 4,
                         ),
                         title: Text(
                           'Lap ${index + 1}: ${_lapTimes[index]}',
@@ -206,76 +176,5 @@ class _StopwatchScreenState extends State<StopwatchScreen> {
         ),
       ),
     );
-  }
-}
-
-class StopwatchPainter extends CustomPainter {
-  final double angle;
-  StopwatchPainter(this.angle);
-
-  @override
-  void paint(Canvas canvas, Size size) {
-    final center = Offset(size.width / 2, size.height / 2);
-    final radius = size.width / 2 - 10;
-
-    final paintCircle =
-        Paint()
-          ..color = Colors.white
-          ..style = PaintingStyle.fill;
-
-    final paintBorder =
-        Paint()
-          ..color = Colors.blue.shade800
-          ..style = PaintingStyle.stroke
-          ..strokeWidth = 4;
-
-    final paintNeedle =
-        Paint()
-          ..color = Colors.red
-          ..strokeWidth = 4
-          ..strokeCap = StrokeCap.round;
-
-    // Draw base circle and border
-    canvas.drawCircle(center, radius, paintCircle);
-    canvas.drawCircle(center, radius, paintBorder);
-
-    // Draw numbers (keliling)
-    final textPainter = TextPainter(
-      textAlign: TextAlign.center,
-      textDirection: TextDirection.ltr,
-    );
-
-    for (int i = 5; i <= 60; i += 5) {
-      double tickAngle = (2 * pi * (i / 60)) - pi / 2;
-      final offset = Offset(
-        center.dx + (radius - 20) * cos(tickAngle),
-        center.dy + (radius - 20) * sin(tickAngle),
-      );
-      textPainter.text = TextSpan(
-        text: "$i",
-        style: const TextStyle(fontSize: 12, color: Colors.black87),
-      );
-      textPainter.layout();
-      canvas.save();
-      canvas.translate(
-        offset.dx - textPainter.width / 2,
-        offset.dy - textPainter.height / 2,
-      );
-      textPainter.paint(canvas, Offset.zero);
-      canvas.restore();
-    }
-
-    // Draw needle
-    final needleLength = radius - 30;
-    final needleEnd = Offset(
-      center.dx + needleLength * cos(angle),
-      center.dy + needleLength * sin(angle),
-    );
-    canvas.drawLine(center, needleEnd, paintNeedle);
-  }
-
-  @override
-  bool shouldRepaint(covariant StopwatchPainter oldDelegate) {
-    return oldDelegate.angle != angle;
   }
 }

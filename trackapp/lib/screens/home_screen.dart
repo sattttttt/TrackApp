@@ -75,7 +75,7 @@ class _HomeScreenState extends State<HomeScreen> {
           title,
           style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
         ),
-        trailing: Icon(Icons.arrow_forward_ios, color: Colors.deepPurpleAccent),
+        trailing: Icon(Icons.arrow_forward_ios, color: const Color(0xFF7C4DFF)),
         onTap: onTap,
       ),
     );
