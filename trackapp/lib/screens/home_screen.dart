@@ -1,4 +1,6 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'stopwatch_screen.dart';
 import 'number_type_screen.dart';
@@ -15,11 +17,15 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   String _username = "";
+  String _currentTime = "";
+  String _currentDate = "";
+  Timer? _timer;
 
   @override
   void initState() {
     super.initState();
     _loadUsername();
+    _startClock();
   }
 
   Future<void> _loadUsername() async {
@@ -27,6 +33,25 @@ class _HomeScreenState extends State<HomeScreen> {
     setState(() {
       _username = prefs.getString("username") ?? "";
     });
+  }
+
+  void _startClock() {
+    _timer = Timer.periodic(Duration(seconds: 1), (timer) {
+      setState(() {
+        _currentTime = _getCurrentTime();
+        _currentDate = _getCurrentDate();
+      });
+    });
+  }
+
+  String _getCurrentTime() {
+    DateTime now = DateTime.now();
+    return "${now.hour.toString().padLeft(2, '0')}:${now.minute.toString().padLeft(2, '0')}:${now.second.toString().padLeft(2, '0')}";
+  }
+
+  String _getCurrentDate() {
+    DateTime now = DateTime.now();
+    return DateFormat('d MMMM yyyy').format(now);
   }
 
   Future<void> _logout(BuildContext context) async {
@@ -40,84 +65,104 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Widget buildMenuCard(String title, IconData icon, VoidCallback onTap) {
     return Card(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-      elevation: 4,
-      color: Colors.white.withOpacity(0.95),
-      margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+      elevation: 10,
+      color: Colors.white,
+      margin: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
       child: ListTile(
-        leading: Icon(icon, color: Colors.blue.shade700),
+        leading: Icon(icon, color: Colors.deepPurpleAccent, size: 40),
         title: Text(
           title,
-          style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+          style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
         ),
-        trailing: const Icon(Icons.arrow_forward_ios, size: 16),
+        trailing: Icon(Icons.arrow_forward_ios, color: Colors.deepPurpleAccent),
         onTap: onTap,
       ),
     );
   }
 
   @override
+  void dispose() {
+    _timer?.cancel();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      extendBody: true,
       body: Container(
+        width: double.infinity,
         decoration: const BoxDecoration(
           gradient: LinearGradient(
-            colors: [Color(0xFF4A90E2), Color(0xFF50E3C2)],
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
+            colors: [Color(0xFF8E44AD), Color(0xFF2980B9)],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
           ),
         ),
         child: SafeArea(
           child: Column(
             children: [
-              const SizedBox(height: 16),
-              Text(
-                "",
-                style: const TextStyle(
-                  fontSize: 22,
-                  fontWeight: FontWeight.w600,
-                  color: Colors.white,
-                  shadows: [
-                    Shadow(
-                      blurRadius: 3,
-                      color: Colors.black26,
-                      offset: Offset(1, 2),
+              // Header with username, logout icon, time and date
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 24),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      "Hello, $_username!",
+                      style: const TextStyle(
+                        fontSize: 26,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                        shadows: [
+                          Shadow(
+                            blurRadius: 3,
+                            color: Colors.black26,
+                            offset: Offset(1, 2),
+                          ),
+                        ],
+                      ),
+                    ),
+                    IconButton(
+                      icon: const Icon(Icons.logout, color: Colors.white),
+                      onPressed: () => _logout(context),
                     ),
                   ],
                 ),
               ),
-              const SizedBox(height: 16),
-              Align(
-                alignment: Alignment.centerLeft,
-                child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 24),
-                  child: Text(
-                    "Halo, $_username!",
-                    style: TextStyle(
-                      fontSize: 22,
-                      fontWeight: FontWeight.w600,
-                      color: Colors.white,
-                      shadows: [
-                        Shadow(
-                          blurRadius: 3,
-                          color: Colors.black26,
-                          offset: Offset(1, 2),
-                        ),
-                      ],
+              const SizedBox(height: 20),
+
+              // Display the current time and date
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 24),
+                child: Column(
+                  children: [
+                    Text(
+                      _currentDate,
+                      style: const TextStyle(
+                        fontSize: 18,
+                        color: Colors.white70,
+                      ),
                     ),
-                  ),
+                    const SizedBox(height: 10),
+                    Text(
+                      _currentTime,
+                      style: const TextStyle(
+                        fontSize: 32,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ],
                 ),
               ),
-              const SizedBox(height: 12),
-              const Align(
-                alignment: Alignment.centerLeft,
-                child: Padding(padding: EdgeInsets.symmetric(horizontal: 24)),
-              ),
-              const SizedBox(height: 16),
+
+              const SizedBox(height: 20),
+
+              // Menu Cards
               Expanded(
                 child: ListView(
-                  padding: const EdgeInsets.symmetric(vertical: 4),
+                  padding: const EdgeInsets.symmetric(vertical: 8),
                   children: [
                     buildMenuCard("Stopwatch", Icons.timer, () {
                       Navigator.push(
@@ -128,7 +173,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       );
                     }),
                     buildMenuCard(
-                      "Jenis Bilangan",
+                      "Number Type",
                       Icons.format_list_numbered,
                       () {
                         Navigator.push(
@@ -147,7 +192,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                       );
                     }),
-                    buildMenuCard("Konversi Waktu", Icons.access_time, () {
+                    buildMenuCard("Time Conversion", Icons.access_time, () {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
@@ -155,7 +200,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                       );
                     }),
-                    buildMenuCard("Rekomendasi Situs", Icons.link, () {
+                    buildMenuCard("Recommendation Sites", Icons.link, () {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
@@ -163,23 +208,6 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                       );
                     }),
-                    const SizedBox(height: 16),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 16),
-                      child: ElevatedButton.icon(
-                        icon: const Icon(Icons.logout),
-                        label: const Text("Logout"),
-                        onPressed: () => _logout(context),
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.redAccent,
-                          foregroundColor: Colors.white,
-                          padding: const EdgeInsets.symmetric(vertical: 14),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                        ),
-                      ),
-                    ),
                   ],
                 ),
               ),
@@ -187,7 +215,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ),
       ),
-      bottomNavigationBar: BottomNav(), // Static BottomNav without animation
+      bottomNavigationBar: BottomNav(),
     );
   }
 }
