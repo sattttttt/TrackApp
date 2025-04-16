@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 
 class NumberTypeScreen extends StatefulWidget {
@@ -66,20 +67,15 @@ class _NumberTypeScreenState extends State<NumberTypeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("JENIS BILANGAN"),
-        backgroundColor: const Color(0xFF4A90E2),
-        centerTitle: true,
-        titleTextStyle: const TextStyle(
-          fontSize: 22,
-          fontWeight: FontWeight.bold,
-          letterSpacing: 1.2,
-        ),
+        title: const Text("Number Type"),
+        backgroundColor: const Color(0xFF8E44AD),
+        foregroundColor: Colors.white,
       ),
       body: Container(
         width: double.infinity,
         decoration: const BoxDecoration(
           gradient: LinearGradient(
-            colors: [Color(0xFF4A90E2), Color(0xFF50E3C2)],
+            colors: [Color(0xFF8E44AD), Color(0xFF2980B9)],
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
           ),
@@ -89,6 +85,7 @@ class _NumberTypeScreenState extends State<NumberTypeScreen> {
             padding: const EdgeInsets.all(20),
             child: Column(
               children: [
+                // Rounded Text Input
                 TextField(
                   controller: _numberController,
                   keyboardType: TextInputType.number,
@@ -96,59 +93,67 @@ class _NumberTypeScreenState extends State<NumberTypeScreen> {
                     hintText: "Masukkan angka",
                     prefixIcon: const Icon(Icons.confirmation_number),
                     filled: true,
-                    fillColor: Colors.white.withOpacity(0.9),
+                    fillColor: Colors.white.withOpacity(0.8),
                     border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
+                      borderRadius: BorderRadius.circular(30),
+                      borderSide: BorderSide.none,
                     ),
+                    contentPadding: const EdgeInsets.symmetric(vertical: 18),
                   ),
                 ),
-                const SizedBox(height: 16),
+                const SizedBox(height: 20),
+
+                // Modern Button
                 ElevatedButton.icon(
                   onPressed: _analyzeNumber,
                   icon: const Icon(Icons.search),
                   label: const Text("Cek Jenis Bilangan"),
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.blue.shade700,
                     foregroundColor: Colors.white,
+                    backgroundColor: const Color(0xFF4A90E2),
                     padding: const EdgeInsets.symmetric(
-                      horizontal: 20,
-                      vertical: 14,
+                      horizontal: 32,
+                      vertical: 16,
                     ),
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
+                      borderRadius: BorderRadius.circular(30),
+                    ),
+                    textStyle: const TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
                 ),
                 const SizedBox(height: 24),
+
+                // Result Card
                 if (_result.isNotEmpty)
-                  Card(
-                    elevation: 6,
-                    shape: RoundedRectangleBorder(
+                  AnimatedContainer(
+                    duration: const Duration(milliseconds: 300),
+                    padding: const EdgeInsets.all(20),
+                    decoration: BoxDecoration(
+                      color: _isValid ? Colors.white : Colors.red.shade100,
                       borderRadius: BorderRadius.circular(16),
                     ),
-                    color: _isValid ? Colors.white : Colors.red.shade100,
-                    child: Padding(
-                      padding: const EdgeInsets.all(20),
-                      child: Row(
-                        children: [
-                          Icon(
-                            _isValid ? Icons.check_circle : Icons.error,
-                            color: _isValid ? Colors.green : Colors.red,
-                          ),
-                          const SizedBox(width: 12),
-                          Expanded(
-                            child: Text(
-                              _result,
-                              style: TextStyle(
-                                fontSize: 16,
-                                color:
-                                    _isValid ? Colors.black87 : Colors.red[900],
-                                fontWeight: FontWeight.w500,
-                              ),
+                    child: Row(
+                      children: [
+                        Icon(
+                          _isValid ? Icons.check_circle : Icons.error,
+                          color: _isValid ? Colors.green : Colors.red,
+                        ),
+                        const SizedBox(width: 12),
+                        Expanded(
+                          child: Text(
+                            _result,
+                            style: TextStyle(
+                              fontSize: 18,
+                              color:
+                                  _isValid ? Colors.black87 : Colors.red[900],
+                              fontWeight: FontWeight.w500,
                             ),
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
                   ),
               ],
