@@ -3,7 +3,21 @@ import '../widgets/bottom_nav.dart'; // Ensure this is imported
 
 class MembersScreen extends StatelessWidget {
   final List<Map<String, String>> members = [
-    {"name": "Arda", "description": "123220163"},
+    {
+      "name": "Arda",
+      "description": "123220163",
+      "image": "asset/1.jpg", // Path to the local image
+    },
+    {
+      "name": "Nolan",
+      "description": "123220049",
+      "image": "asset/2.jpg", // Path to the local image
+    },
+    {
+      "name": "Satria",
+      "description": "123220157",
+      "image": "asset/3.jpg", // Path to the local image
+    },
   ];
 
   @override
@@ -39,26 +53,46 @@ class MembersScreen extends StatelessWidget {
                   horizontal: 16,
                   vertical: 16,
                 ),
-                child: Column(
+                child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      member["name"]!,
-                      style: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16,
-                        color: Colors.black87,
+                    // Profile picture of the member (use Image.asset to load local assets)
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(12),
+                      child: Image.asset(
+                        member["image"]!, // Replace with the local asset path
+                        width: 50,
+                        height: 50,
+                        fit: BoxFit.cover,
                       ),
                     ),
-                    const SizedBox(height: 6),
-                    Text(
-                      member["description"]!,
-                      style: const TextStyle(
-                        fontSize: 14,
-                        color: Colors.black54,
+                    const SizedBox(width: 16),
+                    // Member's name and description
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            member["name"]!,
+                            style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16,
+                              color: Colors.black87,
+                            ),
+                          ),
+                          const SizedBox(height: 6),
+                          Text(
+                            member["description"]!,
+                            style: const TextStyle(
+                              fontSize: 14,
+                              color: Colors.black54,
+                            ),
+                          ),
+                        ],
                       ),
                     ),
-                    const SizedBox(height: 8),
+                    const SizedBox(width: 8),
+                    // Icon button for showing member details
                     Align(
                       alignment: Alignment.centerRight,
                       child: IconButton(
@@ -86,7 +120,7 @@ class MembersScreen extends StatelessWidget {
           },
         ),
       ),
-      bottomNavigationBar: BottomNav(), // Static BottomNav without animation
+      bottomNavigationBar: BottomNav(),
     );
   }
 }

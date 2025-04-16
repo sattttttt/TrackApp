@@ -16,21 +16,22 @@ class _LoginScreenState extends State<LoginScreen> {
 
   void _login() async {
     // Predefined credentials
-    const String validUsername = "Arda";
-    const String validPassword = "163";
+    const Map<String, String> validCredentials = {
+      "Arda": "163",
+      "Nolan": "049",
+      "Satria": "157",
+    };
 
     // Get the entered username and password
     String enteredUsername = _usernameController.text;
     String enteredPassword = _passwordController.text;
 
-    // Check if the entered username and password match the predefined ones
-    if (enteredUsername != validUsername) {
-      // If the username is incorrect, show the username error message
+    // Check if the entered username exists and the password matches
+    if (!validCredentials.containsKey(enteredUsername)) {
       setState(() {
         _errorMessage = "Username is incorrect!";
       });
-    } else if (enteredPassword != validPassword) {
-      // If the password is incorrect, show the password error message
+    } else if (validCredentials[enteredUsername] != enteredPassword) {
       setState(() {
         _errorMessage = "Password is incorrect!";
       });
@@ -53,7 +54,7 @@ class _LoginScreenState extends State<LoginScreen> {
       body: Container(
         decoration: const BoxDecoration(
           gradient: LinearGradient(
-            colors: [Color(0xFF4A90E2), Color(0xFF50E3C2)],
+            colors: [Color(0xFF8E44AD), Color(0xFF2980B9)],
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
           ),
@@ -72,7 +73,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     const Text(
-                      'Welcome Back!',
+                      'Welcome TrackApp!',
                       style: TextStyle(
                         fontSize: 24,
                         fontWeight: FontWeight.bold,
