@@ -3,21 +3,9 @@ import '../widgets/bottom_nav.dart'; // Ensure this is imported
 
 class MembersScreen extends StatelessWidget {
   final List<Map<String, String>> members = [
-    {
-      "name": "Arda",
-      "description": "123220163",
-      "image": "asset/1.jpg", // Path to the local image
-    },
-    {
-      "name": "Nolan",
-      "description": "123220049",
-      "image": "asset/2.jpg", // Path to the local image
-    },
-    {
-      "name": "Satria",
-      "description": "123220157",
-      "image": "asset/3.jpg", // Path to the local image
-    },
+    {"name": "Arda", "description": "123220163", "image": "asset/1.jpg"},
+    {"name": "Nolan", "description": "123220049", "image": "asset/2.jpg"},
+    {"name": "Satria", "description": "123220157", "image": "asset/3.jpg"},
   ];
 
   @override

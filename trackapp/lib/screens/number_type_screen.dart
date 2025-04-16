@@ -23,7 +23,7 @@ class _NumberTypeScreenState extends State<NumberTypeScreen> {
     String input = _numberController.text;
     if (input.isEmpty) {
       setState(() {
-        _result = "Masukkan angka terlebih dahulu!";
+        _result = "Enter numbers first!";
         _isValid = false;
       });
       return;
@@ -32,7 +32,7 @@ class _NumberTypeScreenState extends State<NumberTypeScreen> {
     int? number = int.tryParse(input);
     if (number == null) {
       setState(() {
-        _result = "Masukkan angka yang valid!";
+        _result = "Enter a valid number!";
         _isValid = false;
       });
       return;
@@ -40,25 +40,25 @@ class _NumberTypeScreenState extends State<NumberTypeScreen> {
 
     List<String> properties = [];
     if (number > 0) {
-      properties.add("Positif");
+      properties.add("Positive");
     } else if (number < 0) {
-      properties.add("Negatif");
+      properties.add("Negative");
     } else {
       properties.add("Nol");
     }
 
     if (number % 2 == 0) {
-      properties.add("Genap");
+      properties.add("Even");
     } else {
-      properties.add("Ganjil");
+      properties.add("Odd");
     }
 
     if (_isPrime(number)) {
-      properties.add("Bilangan Prima");
+      properties.add("Prime Numbers");
     }
 
     setState(() {
-      _result = "Angka $number adalah: ${properties.join(', ')}";
+      _result = "Number $number is: ${properties.join(', ')}";
       _isValid = true;
     });
   }
@@ -90,7 +90,7 @@ class _NumberTypeScreenState extends State<NumberTypeScreen> {
                   controller: _numberController,
                   keyboardType: TextInputType.number,
                   decoration: InputDecoration(
-                    hintText: "Masukkan angka",
+                    hintText: "Enter Number",
                     prefixIcon: const Icon(Icons.confirmation_number),
                     filled: true,
                     fillColor: Colors.white.withOpacity(0.8),
@@ -107,7 +107,7 @@ class _NumberTypeScreenState extends State<NumberTypeScreen> {
                 ElevatedButton.icon(
                   onPressed: _analyzeNumber,
                   icon: const Icon(Icons.search),
-                  label: const Text("Cek Jenis Bilangan"),
+                  label: const Text("Check"),
                   style: ElevatedButton.styleFrom(
                     foregroundColor: Colors.white,
                     backgroundColor: const Color(0xFF4A90E2),

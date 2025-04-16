@@ -14,7 +14,7 @@ class _TimeConversionScreenState extends State<TimeConversionScreen> {
     String input = _yearController.text;
     if (input.isEmpty) {
       setState(() {
-        _result = "Masukkan tahun terlebih dahulu!";
+        _result = "Enter the year first!";
         _isValid = false;
       });
       return;
@@ -23,7 +23,7 @@ class _TimeConversionScreenState extends State<TimeConversionScreen> {
     int? years = int.tryParse(input);
     if (years == null || years < 0) {
       setState(() {
-        _result = "Masukkan angka yang valid!";
+        _result = "Enter a valid number!";
         _isValid = false;
       });
       return;
@@ -35,7 +35,7 @@ class _TimeConversionScreenState extends State<TimeConversionScreen> {
     int seconds = minutes * 60;
 
     setState(() {
-      _result = "$years tahun = $hours jam, $minutes menit, $seconds detik";
+      _result = "$years year = $hours Hours, $minutes minute, $seconds second";
       _isValid = true;
     });
   }
@@ -66,7 +66,7 @@ class _TimeConversionScreenState extends State<TimeConversionScreen> {
                   controller: _yearController,
                   keyboardType: TextInputType.number,
                   decoration: InputDecoration(
-                    hintText: "Masukkan tahun",
+                    hintText: "Enter year",
                     prefixIcon: const Icon(Icons.date_range),
                     filled: true,
                     fillColor: Colors.white.withOpacity(0.9),
@@ -79,7 +79,7 @@ class _TimeConversionScreenState extends State<TimeConversionScreen> {
                 ElevatedButton.icon(
                   onPressed: _convertTime,
                   icon: const Icon(Icons.access_time),
-                  label: const Text("Konversi"),
+                  label: const Text("Conversion"),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.blue.shade700,
                     foregroundColor: Colors.white,

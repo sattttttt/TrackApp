@@ -17,7 +17,7 @@ class _TrackingLBSScreenState extends State<TrackingLBSScreen> {
     serviceEnabled = await Geolocator.isLocationServiceEnabled();
     if (!serviceEnabled) {
       setState(() {
-        _locationMessage = "Layanan lokasi tidak aktif.";
+        _locationMessage = "Location services are off.";
         _isValid = false;
       });
       return;
@@ -28,7 +28,7 @@ class _TrackingLBSScreenState extends State<TrackingLBSScreen> {
       permission = await Geolocator.requestPermission();
       if (permission == LocationPermission.denied) {
         setState(() {
-          _locationMessage = "Izin lokasi ditolak.";
+          _locationMessage = "Location permission denied.";
           _isValid = false;
         });
         return;
@@ -37,7 +37,7 @@ class _TrackingLBSScreenState extends State<TrackingLBSScreen> {
 
     if (permission == LocationPermission.deniedForever) {
       setState(() {
-        _locationMessage = "Izin lokasi ditolak secara permanen.";
+        _locationMessage = "Location permission permanently denied.";
         _isValid = false;
       });
       return;
@@ -118,7 +118,7 @@ class _TrackingLBSScreenState extends State<TrackingLBSScreen> {
                 ElevatedButton.icon(
                   onPressed: _getCurrentLocation,
                   icon: const Icon(Icons.my_location),
-                  label: const Text("Dapatkan Lokasi Sekarang"),
+                  label: const Text("Get Location"),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.blue.shade700,
                     foregroundColor: Colors.white,
