@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import '../widgets/bottom_nav.dart'; // Ensure this is imported
 
@@ -6,20 +7,15 @@ class HelpScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("BANTUAN"),
-        centerTitle: true,
-        backgroundColor: const Color(0xFF4A90E2),
-        titleTextStyle: const TextStyle(
-          fontSize: 20,
-          fontWeight: FontWeight.bold,
-          letterSpacing: 1.2,
-        ),
+        title: const Text("Help"),
+        backgroundColor: const Color(0xFF8E44AD),
+        foregroundColor: Colors.white,
       ),
       body: Container(
         width: double.infinity,
         decoration: const BoxDecoration(
           gradient: LinearGradient(
-            colors: [Color(0xFF4A90E2), Color(0xFF50E3C2)],
+            colors: [Color(0xFF8E44AD), Color(0xFF2980B9)],
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
           ),
@@ -38,64 +34,93 @@ class HelpScreen extends StatelessWidget {
                 // Make this part scrollable
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: const [
-                    Text(
+                  children: [
+                    const Text(
                       "Panduan Penggunaan Aplikasi",
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
                         color: Colors.black87,
+                        textBaseline: TextBaseline.alphabetic,
                       ),
                     ),
-                    SizedBox(height: 16),
-                    Text("1. Login dengan akun Anda."),
-                    SizedBox(height: 6),
-                    Text(
+                    const SizedBox(height: 16),
+                    const Text(
+                      "1. Login dengan akun Anda.",
+                      textAlign: TextAlign.justify,
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    const SizedBox(height: 6),
+                    const Text(
                       "   - Masukkan username dan password pada halaman login.",
+                      textAlign: TextAlign.justify,
                     ),
-                    Text(
+                    const Text(
                       "   - Jika berhasil, Anda akan diarahkan ke halaman utama.",
+                      textAlign: TextAlign.justify,
                     ),
-                    SizedBox(height: 10),
-                    Text("2. Pilih menu yang tersedia di halaman utama."),
-                    SizedBox(height: 6),
-                    Text(
+                    const SizedBox(height: 10),
+                    const Text(
+                      "2. Pilih menu yang tersedia di halaman utama.",
+                      textAlign: TextAlign.justify,
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    const SizedBox(height: 6),
+                    const Text(
                       "   - Stopwatch: Menghitung waktu mundur atau berjalan.",
+                      textAlign: TextAlign.justify,
                     ),
-                    Text(
+                    const Text(
                       "   - Jenis Bilangan: Menentukan tipe bilangan (positif, genap, dll).",
+                      textAlign: TextAlign.justify,
                     ),
-                    Text(
+                    const Text(
                       "   - Tracking LBS: Menampilkan lokasi Anda secara real-time.",
+                      textAlign: TextAlign.justify,
                     ),
-                    Text(
+                    const Text(
                       "   - Konversi Waktu: Mengubah tahun ke jam, menit, dan detik.",
+                      textAlign: TextAlign.justify,
                     ),
-                    Text(
+                    const Text(
                       "   - Rekomendasi Situs: Daftar situs bermanfaat yang bisa disimpan.",
+                      textAlign: TextAlign.justify,
                     ),
-                    SizedBox(height: 10),
-                    Text("3. Navigasi aplikasi:"),
-                    SizedBox(height: 6),
-                    Text(
+                    const SizedBox(height: 10),
+                    const Text(
+                      "3. Navigasi aplikasi:",
+                      textAlign: TextAlign.justify,
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    const SizedBox(height: 6),
+                    const Text(
                       "   - Gunakan menu navigasi bawah untuk pindah antar halaman.",
+                      textAlign: TextAlign.justify,
                     ),
-                    Text(
+                    const Text(
                       "   - Halaman Anggota menampilkan daftar tim pengembang.",
+                      textAlign: TextAlign.justify,
                     ),
-                    SizedBox(height: 10),
-                    Text("4. Keluar dari aplikasi:"),
-                    SizedBox(height: 6),
-                    Text(
+                    const SizedBox(height: 10),
+                    const Text(
+                      "4. Keluar dari aplikasi:",
+                      textAlign: TextAlign.justify,
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    const SizedBox(height: 6),
+                    const Text(
                       "   - Klik ikon Logout di bagian bawah untuk keluar dari sesi.",
+                      textAlign: TextAlign.justify,
                     ),
-                    SizedBox(height: 20),
-                    Text(
+                    const SizedBox(height: 20),
+                    const Text(
                       "Catatan: Pastikan koneksi internet aktif untuk fitur lokasi.",
                       style: TextStyle(
                         fontStyle: FontStyle.italic,
                         color: Colors.black54,
+                        fontWeight: FontWeight.bold,
                       ),
+                      textAlign: TextAlign.justify,
                     ),
                   ],
                 ),

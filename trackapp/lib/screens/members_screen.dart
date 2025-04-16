@@ -10,19 +10,14 @@ class MembersScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("DAFTAR ANGGOTA"),
-        centerTitle: true,
-        backgroundColor: const Color(0xFF4A90E2),
-        titleTextStyle: const TextStyle(
-          fontSize: 20,
-          fontWeight: FontWeight.bold,
-          letterSpacing: 1.2,
-        ),
+        title: const Text("Member List"),
+        backgroundColor: const Color(0xFF8E44AD),
+        foregroundColor: Colors.white,
       ),
       body: Container(
         decoration: const BoxDecoration(
           gradient: LinearGradient(
-            colors: [Color(0xFF4A90E2), Color(0xFF50E3C2)],
+            colors: [Color(0xFF8E44AD), Color(0xFF2980B9)],
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
           ),
