@@ -70,7 +70,7 @@ class _HomeScreenState extends State<HomeScreen> {
       color: Colors.white,
       margin: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
       child: ListTile(
-        leading: Icon(icon, color: Colors.deepPurpleAccent, size: 40),
+        leading: Icon(icon, color: const Color(0xFF7C4DFF), size: 40),
         title: Text(
           title,
           style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
