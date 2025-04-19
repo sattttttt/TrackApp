@@ -20,7 +20,7 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
   String _currentDate = "";
   Timer? _clockTimer;
   Timer? _inactivityTimer;
-  final int _sessionTimeout = 180; // 5 menit dalam detik
+  final int _sessionTimeout = 180; // 3 menit dalam detik
 
   @override
   void initState() {
