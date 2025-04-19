@@ -15,31 +15,35 @@ class _LoginScreenState extends State<LoginScreen> {
   String _errorMessage = "";
 
   void _login() async {
-    // Predefined credentials
     const Map<String, String> validCredentials = {
       "Arda": "163",
       "Nolan": "049",
       "Satria": "157",
     };
 
-    // Get the entered username and password
-    String enteredUsername = _usernameController.text;
-    String enteredPassword = _passwordController.text;
+    String enteredUsername = _usernameController.text.trim();
+    String enteredPassword = _passwordController.text.trim();
 
-    // Check if the entered username exists and the password matches
+    if (enteredUsername.isEmpty || enteredPassword.isEmpty) {
+      setState(() {
+        _errorMessage = "Username dan password harus diisi!";
+      });
+      return;
+    }
+
     if (!validCredentials.containsKey(enteredUsername)) {
       setState(() {
-        _errorMessage = "Username is incorrect!";
+        _errorMessage = "Username tidak ditemukan!";
       });
     } else if (validCredentials[enteredUsername] != enteredPassword) {
       setState(() {
-        _errorMessage = "Password is incorrect!";
+        _errorMessage = "Password salah!";
       });
     } else {
-      // If both are correct, proceed with login
       SharedPreferences prefs = await SharedPreferences.getInstance();
       await prefs.setBool("isLoggedIn", true);
       await prefs.setString("username", enteredUsername);
+      await prefs.setString("lastActivity", DateTime.now().toString());
 
       Navigator.pushReplacement(
         context,
@@ -120,7 +124,10 @@ class _LoginScreenState extends State<LoginScreen> {
                         padding: const EdgeInsets.only(bottom: 16),
                         child: Text(
                           _errorMessage,
-                          style: TextStyle(color: Colors.red, fontSize: 16),
+                          style: const TextStyle(
+                            color: Colors.red,
+                            fontSize: 16,
+                          ),
                         ),
                       ),
                     SizedBox(

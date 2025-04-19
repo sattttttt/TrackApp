@@ -15,10 +15,12 @@ class MyApp extends StatelessWidget {
       title: 'Mobile App',
       theme: ThemeData(primarySwatch: Colors.blue),
       home: FutureBuilder<bool>(
-        future: _checkLogin(),
+        future: _checkSession(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return CircularProgressIndicator();
+            return Scaffold(
+              body: Center(child: CircularProgressIndicator()),
+            );
           }
           return snapshot.data == true ? HomeScreen() : LoginScreen();
         },
@@ -26,8 +28,23 @@ class MyApp extends StatelessWidget {
     );
   }
 
-  Future<bool> _checkLogin() async {
+  Future<bool> _checkSession() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    return prefs.getBool("isLoggedIn") ?? false;
+    bool isLoggedIn = prefs.getBool("isLoggedIn") ?? false;
+    
+    if (isLoggedIn) {
+      String? lastActivityStr = prefs.getString("lastActivity");
+      if (lastActivityStr == null) return false;
+      
+      DateTime lastActivity = DateTime.parse(lastActivityStr);
+      DateTime currentTime = DateTime.now();
+      Duration difference = currentTime.difference(lastActivity);
+      
+      if (difference.inMinutes >= 5) {
+        await prefs.clear();
+        return false;
+      }
+    }
+    return isLoggedIn;
   }
 }

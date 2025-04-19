@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class TrackingLBSScreen extends StatefulWidget {
   @override
@@ -9,6 +10,8 @@ class TrackingLBSScreen extends StatefulWidget {
 class _TrackingLBSScreenState extends State<TrackingLBSScreen> {
   String _locationMessage = "";
   bool _isValid = false;
+  double? _latitude;
+  double? _longitude;
 
   Future<void> _getCurrentLocation() async {
     bool serviceEnabled;
@@ -51,7 +54,24 @@ class _TrackingLBSScreenState extends State<TrackingLBSScreen> {
       _locationMessage =
           "Latitude: ${position.latitude}\nLongitude: ${position.longitude}";
       _isValid = true;
+      _latitude = position.latitude;
+      _longitude = position.longitude;
     });
+  }
+
+  void _openGoogleMaps() async {
+    if (_latitude == null || _longitude == null) return;
+
+    String url = "https://www.google.com/maps/search/?api=1&query=$_latitude,$_longitude";
+    Uri uri = Uri.parse(url);
+    
+    if (await canLaunchUrl(uri)) {
+      await launchUrl(uri);
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Gagal membuka Google Maps")),
+      );
+    }
   }
 
   @override
@@ -102,10 +122,9 @@ class _TrackingLBSScreenState extends State<TrackingLBSScreen> {
                               _locationMessage,
                               style: TextStyle(
                                 fontSize: 16,
-                                color:
-                                    _isValid
-                                        ? Colors.black87
-                                        : Colors.red.shade900,
+                                color: _isValid
+                                    ? Colors.black87
+                                    : Colors.red.shade900,
                                 fontWeight: FontWeight.w500,
                               ),
                             ),
@@ -132,6 +151,26 @@ class _TrackingLBSScreenState extends State<TrackingLBSScreen> {
                     textStyle: const TextStyle(fontSize: 16),
                   ),
                 ),
+                if (_isValid)
+                  Padding(
+                    padding: const EdgeInsets.only(top: 20),
+                    child: ElevatedButton.icon(
+                      onPressed: _openGoogleMaps,
+                      icon: const Icon(Icons.map),
+                      label: const Text("Open in Maps"),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.green.shade700,
+                        foregroundColor: Colors.white,
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 24,
+                          vertical: 16,
+                        ),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(14),
+                        ),
+                      ),
+                    ),
+                  ),
               ],
             ),
           ),
